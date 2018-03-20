@@ -1,0 +1,28 @@
+body{
+    font-family: Trebuchet MS;
+    overflow: scroll;
+}
+
+main{
+    margin-bottom: 5%;
+}
+
+h1{
+    font-weight: bolder;
+    font-size: xx-large;
+}
+th{
+    text-align:center;
+    font-size: x-large;
+}
+
+footer {
+    margin-top: 20px;
+    bottom: 0;
+    background-color:#222326;
+    color:white;
+    left: 0;
+    position: fixed;
+    width:100%;
+    font-size: 20px;
+}

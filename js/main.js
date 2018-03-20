@@ -32,12 +32,31 @@ function deleteStudentData(but) {
     if (confirm('Are You Sure?')) {
         sessionStorage.removeItem(id);
     }
+
+    const rows = document.getElementById('dataTable').getElementsByTagName("tr").length;
+    if (rows == 2) {
+        alert("Table is empty! Filling dummy data.");
+    }
     window.location.reload(true);
 }
 
+/* A function to add dummy records when there are no records in the storage*/
+function dummyRecords() {
+    const rows = document.getElementById('dataTable').getElementsByTagName("tr").length;
+    // Add dummy records on first time load
+    if (rows === 1) {
+        let studentObj = { 'name': 'John Doe', 'year': '2020', 'stream': 'CSE' };
+        sessionStorage.setItem(987654321, JSON.stringify(studentObj));
+
+        studentObj = { 'name': 'Ashutosh', 'year': '2019', 'stream': 'CSE' };
+        sessionStorage.setItem(1510991132, JSON.stringify(studentObj));
+    }
+    // calling showData() again to fill up the table.
+    showData();
+}
 
 function addStudentData() {
-    /*
+
     let name = document.getElementById('sname').value;
     let id = document.getElementById('sid').value;
     let year = document.getElementById('syear').value;
@@ -49,14 +68,22 @@ function addStudentData() {
         return false;
     }
 
+    /* Ensuring unique keys hsould be allowed. */
+    for (let i = 0; i < sessionStorage.length; i++) {
+        if (sessionStorage.key(i) == id) {
+            alert("Id already exist, cannot insert more than one record using one ID.");
+            return false;
+        }
+    }
+
     // Making a JSON object using the form values 
     let studentObj = { 'name': name, 'year': year, 'stream': stream };
 
     // Pushing record to sessionStorage after stringify JSON Object
     sessionStorage.setItem(id, JSON.stringify(studentObj));
-    */
+
     /* Redirecting back to home page*/
-    //alert("Done. Press OK, redirect to home page.");
+    alert("Done. Redirect to home page.");
 
     window.location.href = "index.html";
     return false;
@@ -84,8 +111,8 @@ function showData() {
         let options = row.insertCell(4);
 
         /* Using dataId attribute of HTML5 to store the Id of the record, this will make edit and delete operations easy */
-        let eButton = "<button class='btn btn-success' onclick='editStudentData(this)' data-id=" + sessionStorage.key(i) + ">Edit</button>";
-        let dButton = "<button class='btn btn-danger' onclick='deleteStudentData(this)' data-id=" + sessionStorage.key(i) + ">Delete</button>";
+        let eButton = "<button class='btn btn-success' onclick='editStudentData(this)' data-id=" + sessionStorage.key(i) + "><i class='fa fa-pencil' aria-hidden='true'></i> Edit</button>";
+        let dButton = "<button class='btn btn-danger' onclick='deleteStudentData(this)' data-id=" + sessionStorage.key(i) + "><i class='fa fa-trash' aria-hidden='true'></i> Delete</button>";
 
         name.innerHTML = obj.name;
         id.innerHTML = sessionStorage.key(i);
@@ -93,4 +120,20 @@ function showData() {
         stream.innerHTML = obj.stream;
         options.innerHTML = eButton + ' ' + dButton;
     }
+
+    // If the table has no records, fill the table with dummy records
+    const rows = document.getElementById('dataTable').getElementsByTagName("tr").length;
+    if (rows === 1) {
+        dummyRecords();
+    }
+}
+
+/* A function to delete all data, but adding the dummy data AS PER REQUIREMENTS. */
+function deleteAllData() {
+    sessionStorage.clear();
+
+    // onload() will fill the dummy data in the table
+
+    alert('Table is empty! Filling dummy data.')
+    window.location.reload(true)
 }
