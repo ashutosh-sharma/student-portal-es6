@@ -15,3 +15,9 @@
       - This will set *preset* plugin of babel to es2015.
       
 Now, you can check if your **babel** is working or not. Add some es6 code in **js/main.js** and run **npm run build** in your project's root directory. A vanilla javascript file will be created by babel in your **dist** directory after converting es6 file.
+
+------
+## How to run the project:
+      - Download the zip or fork the porject
+      - run index.html
+------
