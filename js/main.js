@@ -1,17 +1,18 @@
-/* To edit a stored record*/
-function editStudentData(editButton) {
-    //console.log(but);
-    let id = editButton.getAttribute('data-id')
+/*
+    This javascript is based upon es6 principles such as Template litrals and let/const keywords for better programming practice.
+*/
 
-    /* Using local storage to store id of record which we want to edit */
+/* Putting id in the sessionStorage so that id can be to fill data on editItem.html */
+function editStudentData(editButton) {
+    let id = editButton.getAttribute('data-id')
+    // Using local storage to store id of record which we want to edit */
     sessionStorage.setItem("editId", id);
-    window.location = "editItem.html";
+    window.location.href = "editItem.html";
 }
 
+/* To fill the data in the form fields when we want to edit an item | Called onload() of editItem page's body*/
 function fillEditPage() {
     let id = sessionStorage.getItem('editId');
-
-    sessionStorage.removeItem('editId');
 
     let stu = sessionStorage.getItem(id);
     let obj = JSON.parse(stu);
@@ -21,8 +22,54 @@ function fillEditPage() {
     document.getElementById("syear").value = obj.year;
     document.getElementById("sstream").value = obj.stream;
 
+    /* Have to remove record here beacuse the utility module in addStudentData() in not working */
     sessionStorage.removeItem(id);
+    sessionStorage.removeItem('editId');
+}
 
+/* To add/edit a student record to sessionStorage */
+function addStudentData() {
+    let name = document.getElementById('sname').value;
+    let id = document.getElementById('sid').value;
+    let year = document.getElementById('syear').value;
+    let stream = document.getElementById('sstream').value;
+
+    /* 
+    // A utility module for editItem page : I DONT KNOW WHY IT'S NOT WORKING
+    if(sessionStorage.getItem('editId')){
+        let remId = sessionStorage.getItem('editId');
+        console.log(remId);
+        sessionStorage.removeItem(remId);
+        consle.log('here!!!!!!!!!!!!!!');
+        // removing the Id of the item from sessionStorage which we want to edit
+        sessionStorage.removeItem('editId');
+    } */
+
+    // Form validation --> the fields should not be empty.
+    if (name == null || name == "" || id == null || id == "" || year == null || year == "" || stream == null || stream == "") {
+        alert("Please fill all required fields.");
+        return false;
+    }
+
+    /* Ensuring unique keys should be allowed. */
+    for (let i = 0; i < sessionStorage.length; i++) {
+        if (sessionStorage.key(i) == id) {
+            alert("Id already exist, cannot insert more than one record using one ID.");
+            return false;
+        }
+    }
+
+    // Making a JSON object using the form values 
+    let studentObj = { 'name': name, 'year': year, 'stream': stream };
+
+    // Pushing record to sessionStorage after stringify JSON Object
+    sessionStorage.setItem(id, JSON.stringify(studentObj));
+
+    // Redirecting back to home page
+    alert("Done. Redirect to home page!");
+
+    window.location.href = "index.html";
+    return false;
 }
 
 /* To delete a stored record. */
@@ -46,47 +93,13 @@ function dummyRecords() {
     // Add dummy records on first time load
     if (rows === 1) {
         let studentObj = { 'name': 'John Doe', 'year': '2020', 'stream': 'CSE' };
-        sessionStorage.setItem(987654321, JSON.stringify(studentObj));
+        sessionStorage.setItem(9876543210, JSON.stringify(studentObj));
 
         studentObj = { 'name': 'Ashutosh', 'year': '2019', 'stream': 'CSE' };
         sessionStorage.setItem(1510991132, JSON.stringify(studentObj));
     }
     // calling showData() again to fill up the table.
     showData();
-}
-
-function addStudentData() {
-
-    let name = document.getElementById('sname').value;
-    let id = document.getElementById('sid').value;
-    let year = document.getElementById('syear').value;
-    let stream = document.getElementById('sstream').value;
-
-    // Form validation -- the fields should not be empty.
-    if (name == null || name == "", id == null || id == "", year == null || year == "", stream == null || stream == "") {
-        alert("Please fill all required fields.");
-        return false;
-    }
-
-    /* Ensuring unique keys hsould be allowed. */
-    for (let i = 0; i < sessionStorage.length; i++) {
-        if (sessionStorage.key(i) == id) {
-            alert("Id already exist, cannot insert more than one record using one ID.");
-            return false;
-        }
-    }
-
-    // Making a JSON object using the form values 
-    let studentObj = { 'name': name, 'year': year, 'stream': stream };
-
-    // Pushing record to sessionStorage after stringify JSON Object
-    sessionStorage.setItem(id, JSON.stringify(studentObj));
-
-    /* Redirecting back to home page*/
-    alert("Done. Redirect to home page.");
-
-    window.location.href = "index.html";
-    return false;
 }
 
 /*
@@ -111,14 +124,16 @@ function showData() {
         let options = row.insertCell(4);
 
         /* Using dataId attribute of HTML5 to store the Id of the record, this will make edit and delete operations easy */
-        let eButton = "<button class='btn btn-success' onclick='editStudentData(this)' data-id=" + sessionStorage.key(i) + "><i class='fa fa-pencil' aria-hidden='true'></i> Edit</button>";
-        let dButton = "<button class='btn btn-danger' onclick='deleteStudentData(this)' data-id=" + sessionStorage.key(i) + "><i class='fa fa-trash' aria-hidden='true'></i> Delete</button>";
+        let eButton = `<button class='btn btn-success' onclick='editStudentData(this)' data-id=${sessionStorage.key(i)}><i class='fa fa-pencil' aria-hidden='true'></i> Edit</button>`;
+        let dButton = `<button class='btn btn-danger' onclick='deleteStudentData(this)' data-id=${sessionStorage.key(i)}><i class='fa fa-trash' aria-hidden='true'></i> Delete</button>`;
 
         name.innerHTML = obj.name;
         id.innerHTML = sessionStorage.key(i);
         year.innerHTML = obj.year;
         stream.innerHTML = obj.stream;
-        options.innerHTML = eButton + ' ' + dButton;
+
+        /* USING TEMPLATE LITERALS */
+        options.innerHTML = `${eButton} ${dButton}`;
     }
 
     // If the table has no records, fill the table with dummy records

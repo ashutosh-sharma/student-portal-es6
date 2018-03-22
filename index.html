@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Student Portal</title>
+    <title>Student Portal </title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/styles.css">
 
     <link rel="stylesheet" src="css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -22,7 +23,7 @@
     <header>
         <div class="container">
             <div class="page-header text-center text-primary">
-                <h1 class="header">Student Details Portal</h1>
+                <h1 class="header"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Student Details Portal</h1>
             </div>
         </div>
     </header>
@@ -30,7 +31,7 @@
     <main>
         <div class="container">
             <table class="table table-bordered" id="dataTable">
-                <tr class="bg-primary">
+                <tr style="background: #1f596b; color:white;">
                     <th>Name</th>
                     <th>Student ID</th>
                     <th>Passout Year</th>
@@ -38,19 +39,17 @@
                     <th>Options</th>
                 </tr>
                 <!-- Initial records (static - hardcoded) -->
-
             </table>
+        </div>
 
-            <div class="text-center">
-                <a href="newItem.html" style="text-decoration:none; ">
-                    <button class="btn btn-success">
-                        <i class="fa fa-plus-square" aria-hidden="true"></i> Add new record</button>
-                </a>
-                <!--Delteting all inserted records, and filling with dummy data.-->
-                <button class="btn btn-danger" onclick="deleteAllData()">
-                    <i class="fa fa-eraser" aria-hidden="true"></i> Delete all Records</button>
-            </div>
-
+        <div class="text-center">
+            <a href="newItem.html" style="text-decoration:none; ">
+                <button class="btn btn-success">
+                    <i class="fa fa-plus-square" aria-hidden="true"></i> Add new record</button>
+            </a>
+            <!--Delteting all inserted records, and filling with dummy data.-->
+            <button class="btn btn-danger" onclick="deleteAllData()">
+                <i class="fa fa-eraser" aria-hidden="true"></i> Delete all Records</button>
         </div>
 
     </main>

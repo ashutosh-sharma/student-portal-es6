@@ -7,10 +7,14 @@ main{
     margin-bottom: 5%;
 }
 
-h1{
-    font-weight: bolder;
-    font-size: xx-large;
+h1 { color: rgb(52, 113, 182); 
+    font-family: 'Roboto', sans-serif;
+    font-size: 50px; 
+    font-weight: bold; 
+    letter-spacing: -1px; 
+    line-height: 1;
 }
+
 th{
     text-align:center;
     font-size: x-large;

@@ -8,42 +8,40 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
     <link rel="shortcut icon" href="title_icon.png" />
-
+    
     <link rel="stylesheet" href="css/styles.css">
 
     <link rel="stylesheet" src="css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 </head>
 
-<body onload="fillEditPage()">
+<body onload="fillEditPage();">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="index.html">Student Details</a>
             </div>
-            <ul class="nav navbar-nav  navbar-right">
+            <!-- <ul class="nav navbar-nav  navbar-right">
                 <li>
                     <a href="index.html">
                         <button class="btn btn-success">Back to Homepage</button>
                     </a>
                 </li>
-            </ul>
+            </ul> -->
         </div>
     </nav>
     <header>
         <div class="container">
             <div class="page-header bg-primary  text-center">
-                <h1>Edit Details</h1>
+                <h1 style="color:white">Edit Details</h1>
                 <hr>
             </div>
-
         </div>
     </header>
 
     <main>
         <div class="container">
-            <form onsubmit="return addStudentData()">
+            <form onsubmit="return addStudentData();">
                 <div class="form-group">
                     <label for="text">Name:</label>
                     <input type="text" class="form-control" id="sname" placeholder="Enter Name" name="sname">
