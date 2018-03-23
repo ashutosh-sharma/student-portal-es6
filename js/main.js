@@ -1,9 +1,9 @@
 /*
-    This javascript is based upon es6 principles such as Template litrals and let/const keywords for better programming practice.
+    This javascript is based upon es6 principles.
 */
 
 /* Putting id in the sessionStorage so that id can be to fill data on editItem.html */
-function editStudentData(editButton) {
+const editStudentData = (editButton) => {
     let id = editButton.getAttribute('data-id')
     // Using local storage to store id of record which we want to edit */
     sessionStorage.setItem("editId", id);
@@ -11,7 +11,7 @@ function editStudentData(editButton) {
 }
 
 /* To fill the data in the form fields when we want to edit an item | Called onload() of editItem page's body*/
-function fillEditPage() {
+const fillEditPage = () => {
     let id = sessionStorage.getItem('editId');
 
     let stu = sessionStorage.getItem(id);
@@ -27,8 +27,11 @@ function fillEditPage() {
     sessionStorage.removeItem('editId');
 }
 
+//const toggleAddDetails = () =>{
+
 /* To add/edit a student record to sessionStorage */
-function addStudentData() {
+//function addStudentData() {
+const addStudentData = () => {
     let name = document.getElementById('sname').value;
     let id = document.getElementById('sid').value;
     let year = document.getElementById('syear').value;
@@ -73,39 +76,18 @@ function addStudentData() {
 }
 
 /* To delete a stored record. */
-function deleteStudentData(but) {
+const deleteStudentData = (but) => {
 
     let id = but.getAttribute('data-id');
     if (confirm('Are You Sure?')) {
         sessionStorage.removeItem(id);
     }
-
-    const rows = document.getElementById('dataTable').getElementsByTagName("tr").length;
-    if (rows == 2) {
-        alert("Table is empty! Filling dummy data.");
-    }
     window.location.reload(true);
 }
 
-/* A function to add dummy records when there are no records in the storage*/
-function dummyRecords() {
-    const rows = document.getElementById('dataTable').getElementsByTagName("tr").length;
-    // Add dummy records on first time load
-    if (rows === 1) {
-        let studentObj = { 'name': 'John Doe', 'year': '2020', 'stream': 'CSE' };
-        sessionStorage.setItem(9876543210, JSON.stringify(studentObj));
 
-        studentObj = { 'name': 'Ashutosh', 'year': '2019', 'stream': 'CSE' };
-        sessionStorage.setItem(1510991132, JSON.stringify(studentObj));
-    }
-    // calling showData() again to fill up the table.
-    showData();
-}
-
-/*
-* A funtion to show all the records present in the session Storage.
-*/
-function showData() {
+// A funtion to show all the records present in the session Storage.
+const showData = () =>{
 
     for (let i = 0; i < sessionStorage.length; i++) {
 
@@ -135,20 +117,12 @@ function showData() {
         /* USING TEMPLATE LITERALS */
         options.innerHTML = `${eButton} ${dButton}`;
     }
-
-    // If the table has no records, fill the table with dummy records
-    const rows = document.getElementById('dataTable').getElementsByTagName("tr").length;
-    if (rows === 1) {
-        dummyRecords();
-    }
 }
 
 /* A function to delete all data, but adding the dummy data AS PER REQUIREMENTS. */
-function deleteAllData() {
+const deleteAllData = () => {
     sessionStorage.clear();
 
-    // onload() will fill the dummy data in the table
-
-    alert('Table is empty! Filling dummy data.')
+    confirm('Wanna delete all the data?')
     window.location.reload(true)
 }
