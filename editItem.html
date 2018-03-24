@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body onload="fillEditPage();">
+<body onload="fillEditFormPage();">
     <header>
         <div class="container">
             <div class="page-header bg-primary  text-center">
@@ -27,7 +27,7 @@
 
     <main>
         <div class="container">
-            <form onsubmit="return addStudentData();">
+            <form onsubmit="return onFormSub();">
                 <div class="form-group">
                     <label for="text">Name:</label>
                     <input type="text" class="form-control" id="sname" placeholder="Enter Name" name="sname">
