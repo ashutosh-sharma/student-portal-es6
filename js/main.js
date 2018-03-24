@@ -23,8 +23,8 @@ const fillEditPage = () => {
     document.getElementById("sstream").value = obj.stream;
 
     /* Have to remove record here beacuse the utility module in addStudentData() in not working */
-    sessionStorage.removeItem(id);
-    sessionStorage.removeItem('editId');
+    // sessionStorage.removeItem(id);
+    // sessionStorage.removeItem('editId');
 }
 
 //const toggleAddDetails = () =>{
@@ -37,16 +37,16 @@ const addStudentData = () => {
     let year = document.getElementById('syear').value;
     let stream = document.getElementById('sstream').value;
 
-    /* 
+    
     // A utility module for editItem page : I DONT KNOW WHY IT'S NOT WORKING
     if(sessionStorage.getItem('editId')){
         let remId = sessionStorage.getItem('editId');
         console.log(remId);
         sessionStorage.removeItem(remId);
-        consle.log('here!!!!!!!!!!!!!!');
+        console.log('here!!!!!!!!!!!!!!');
         // removing the Id of the item from sessionStorage which we want to edit
         sessionStorage.removeItem('editId');
-    } */
+    }
 
     // Form validation --> the fields should not be empty.
     if (name == null || name == "" || id == null || id == "" || year == null || year == "" || stream == null || stream == "") {
@@ -90,7 +90,7 @@ const deleteStudentData = (but) => {
 const showData = () =>{
 
     for (let i = 0; i < sessionStorage.length; i++) {
-
+        if(sessionStorage.key(i) == 'editId')   continue;
         let stu = sessionStorage.getItem(sessionStorage.key(i));
         let obj = JSON.parse(stu);
 

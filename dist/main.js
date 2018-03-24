@@ -1,19 +1,20 @@
 "use strict";
 
-/* To edit a stored record*/
-function editStudentData(editButton) {
-    //console.log(but);
+/*
+    This javascript is based upon es6 principles.
+*/
+
+/* Putting id in the sessionStorage so that id can be to fill data on editItem.html */
+var editStudentData = function editStudentData(editButton) {
     var id = editButton.getAttribute('data-id');
-
-    /* Using local storage to store id of record which we want to edit */
+    // Using local storage to store id of record which we want to edit */
     sessionStorage.setItem("editId", id);
-    window.location = "editItem.html";
-}
+    window.location.href = "editItem.html";
+};
 
-function fillEditPage() {
+/* To fill the data in the form fields when we want to edit an item | Called onload() of editItem page's body*/
+var fillEditPage = function fillEditPage() {
     var id = sessionStorage.getItem('editId');
-
-    sessionStorage.removeItem('editId');
 
     var stu = sessionStorage.getItem(id);
     var obj = JSON.parse(stu);
@@ -23,53 +24,39 @@ function fillEditPage() {
     document.getElementById("syear").value = obj.year;
     document.getElementById("sstream").value = obj.stream;
 
+    /* Have to remove record here beacuse the utility module in addStudentData() in not working */
     sessionStorage.removeItem(id);
-}
+    sessionStorage.removeItem('editId');
+};
 
-/* To delete a stored record. */
-function deleteStudentData(but) {
+//const toggleAddDetails = () =>{
 
-    var id = but.getAttribute('data-id');
-    if (confirm('Are You Sure?')) {
-        sessionStorage.removeItem(id);
-    }
-
-    var rows = document.getElementById('dataTable').getElementsByTagName("tr").length;
-    if (rows == 2) {
-        alert("Table is empty! Filling dummy data.");
-    }
-    window.location.reload(true);
-}
-
-/* A function to add dummy records when there are no records in the storage*/
-function dummyRecords() {
-    var rows = document.getElementById('dataTable').getElementsByTagName("tr").length;
-    // Add dummy records on first time load
-    if (rows === 1) {
-        var studentObj = { 'name': 'John Doe', 'year': '2020', 'stream': 'CSE' };
-        sessionStorage.setItem(987654321, JSON.stringify(studentObj));
-
-        studentObj = { 'name': 'Ashutosh', 'year': '2019', 'stream': 'CSE' };
-        sessionStorage.setItem(1510991132, JSON.stringify(studentObj));
-    }
-    // calling showData() again to fill up the table.
-    showData();
-}
-
-function addStudentData() {
-
+/* To add/edit a student record to sessionStorage */
+//function addStudentData() {
+var addStudentData = function addStudentData() {
     var name = document.getElementById('sname').value;
     var id = document.getElementById('sid').value;
     var year = document.getElementById('syear').value;
     var stream = document.getElementById('sstream').value;
 
-    // Form validation -- the fields should not be empty.
-    if (name == null || name == "", id == null || id == "", year == null || year == "", stream == null || stream == "") {
+    /* 
+    // A utility module for editItem page : I DONT KNOW WHY IT'S NOT WORKING
+    if(sessionStorage.getItem('editId')){
+        let remId = sessionStorage.getItem('editId');
+        console.log(remId);
+        sessionStorage.removeItem(remId);
+        consle.log('here!!!!!!!!!!!!!!');
+        // removing the Id of the item from sessionStorage which we want to edit
+        sessionStorage.removeItem('editId');
+    } */
+
+    // Form validation --> the fields should not be empty.
+    if (name == null || name == "" || id == null || id == "" || year == null || year == "" || stream == null || stream == "") {
         alert("Please fill all required fields.");
         return false;
     }
 
-    /* Ensuring unique keys hsould be allowed. */
+    /* Ensuring unique keys should be allowed. */
     for (var i = 0; i < sessionStorage.length; i++) {
         if (sessionStorage.key(i) == id) {
             alert("Id already exist, cannot insert more than one record using one ID.");
@@ -83,17 +70,25 @@ function addStudentData() {
     // Pushing record to sessionStorage after stringify JSON Object
     sessionStorage.setItem(id, JSON.stringify(studentObj));
 
-    /* Redirecting back to home page*/
-    alert("Done. Redirect to home page.");
+    // Redirecting back to home page
+    alert("Done. Redirect to home page!");
 
     window.location.href = "index.html";
     return false;
-}
+};
 
-/*
-* A funtion to show all the records present in the session Storage.
-*/
-function showData() {
+/* To delete a stored record. */
+var deleteStudentData = function deleteStudentData(but) {
+
+    var id = but.getAttribute('data-id');
+    if (confirm('Are You Sure?')) {
+        sessionStorage.removeItem(id);
+    }
+    window.location.reload(true);
+};
+
+// A funtion to show all the records present in the session Storage.
+var showData = function showData() {
 
     for (var i = 0; i < sessionStorage.length; i++) {
 
@@ -119,22 +114,16 @@ function showData() {
         id.innerHTML = sessionStorage.key(i);
         year.innerHTML = obj.year;
         stream.innerHTML = obj.stream;
-        options.innerHTML = eButton + ' ' + dButton;
-    }
 
-    // If the table has no records, fill the table with dummy records
-    var rows = document.getElementById('dataTable').getElementsByTagName("tr").length;
-    if (rows === 1) {
-        dummyRecords();
+        /* USING TEMPLATE LITERALS */
+        options.innerHTML = eButton + " " + dButton;
     }
-}
+};
 
 /* A function to delete all data, but adding the dummy data AS PER REQUIREMENTS. */
-function deleteAllData() {
+var deleteAllData = function deleteAllData() {
     sessionStorage.clear();
 
-    // onload() will fill the dummy data in the table
-
-    alert('Table is empty! Filling dummy data.');
+    confirm('Wanna delete all the data?');
     window.location.reload(true);
-}
+};
