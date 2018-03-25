@@ -1,13 +1,14 @@
-body{
+body {
     font-family: Trebuchet MS;
     overflow: scroll;
 }
 
-main{
+main {
     margin-bottom: 5%;
 }
 
-h1 { color: rgb(52, 113, 182); 
+h1 { 
+    color: rgb(52, 113, 182); 
     font-family: 'Roboto', sans-serif;
     font-size: 50px; 
     font-weight: bold; 
@@ -15,7 +16,7 @@ h1 { color: rgb(52, 113, 182);
     line-height: 1;
 }
 
-th{
+th {
     text-align:center;
     font-size: x-large;
 }
